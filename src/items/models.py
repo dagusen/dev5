@@ -29,14 +29,17 @@ class Item(models.Model):
 	slug					= models.SlugField(null=True, blank=True)
 
 	def __str__(self):
-		return self.name
+		return self.item_name
 
 	class Meta:
 		ordering = ['-updated', '-timestamp']
 
+	def get_absolute_url(self):
+		return reverse('items:edit', kwargs={'slug': self.slug})
+
 	@property
 	def title(self):
-		return self.name
+		return self.item_name
 
 def rl_pre_save_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:

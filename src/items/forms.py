@@ -1,5 +1,7 @@
 from django import forms
 
+from locations.models import Location
+
 from .models import Item
 
 class ItemCreateForm(forms.ModelForm):
@@ -12,3 +14,7 @@ class ItemCreateForm(forms.ModelForm):
 			'claimer',
 			'claimed'
 		]
+		
+	def __init__(self, user=None, *args, **kwargs):
+		super(ItemCreateForm, self).__init__(*args, **kwargs)
+		self.fields['location_and_Category'].queryset = Location.objects.filter(user=user)
