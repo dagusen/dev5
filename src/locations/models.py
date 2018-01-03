@@ -26,7 +26,7 @@ class Location(models.Model):
 	slug				= models.SlugField(null=True, blank=True)
 
 	def __str__(self):
-		return self.location
+		return '%s - %s' % (self.location, self.category)
 
 	class Meta:
 		ordering = ['-updated', '-timestamp']

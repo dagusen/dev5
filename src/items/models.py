@@ -18,15 +18,15 @@ User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 class Item(models.Model):
-	user				= models.ForeignKey(User)
-	location			= models.ForeignKey(Location)
-	name				= models.CharField(max_length=120)
-	returner			= models.CharField(max_length=120)
-	claimer				= models.CharField(max_length=120)
-	claimed				= models.BooleanField(default=True)
-	timestamp			= models.DateTimeField(auto_now_add=True)
-	updated				= models.DateTimeField(auto_now=True)
-	slug				= models.SlugField(null=True, blank=True)
+	user					= models.ForeignKey(User)
+	location_and_Category	= models.ForeignKey(Location)
+	item_name				= models.CharField(max_length=120)
+	returner				= models.CharField(max_length=120)
+	claimer					= models.CharField(max_length=120, null=True, blank=True)
+	claimed					= models.BooleanField(default=False)
+	timestamp				= models.DateTimeField(auto_now_add=True)
+	updated					= models.DateTimeField(auto_now=True)
+	slug					= models.SlugField(null=True, blank=True)
 
 	def __str__(self):
 		return self.name
