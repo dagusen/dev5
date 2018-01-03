@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block head_title %}Location | {{ block.super }}{% endblock head_title %}
+
+{% block content %}
+
+<h1>{{ object.title }}</h1>
+<p>{{ object.category }}</p>
+<small>{{ object.timestamp }}, Updated {{ object.updated|timesince }} ago</small>
+
+{% endblock %}

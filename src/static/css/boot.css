@@ -1,0 +1,96 @@
+
+.carousel-item{
+	background:gray;
+	height:400px
+}
+
+.container{
+	margin-top:40px;
+}
+
+.breadcrumb{
+background:black;
+margin-bottom:0px;
+border-radius:0px;
+}
+
+.breadcrumb-item{
+	color:white;
+}
+
+#signinmail{
+	width:82%;
+	margin-bottom:10px;
+}
+
+#signinpass{
+	width:82%;
+}
+
+.carousel-caption h3{
+text-align:center;
+font-size:50px;
+}
+.carousel-caption p{
+height:200px;
+}
+
+.carousel-control-prev{
+height:300px;
+}
+
+.carousel-control-next{
+height:300px;
+}
+
+.carousel-item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 32rem;
+}
+
+
+.marketing .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-lg-4 p {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+
+
+.featurette-divider {
+  margin: 5rem 0; 
+}
+
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -.05rem;
+}
+
+
+
+@media (min-width: 40em) {
+  .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 62em) {
+  .featurette-heading {
+    margin-top: 7rem;
+  }
+}
