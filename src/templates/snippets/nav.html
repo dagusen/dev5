@@ -1,5 +1,7 @@
 <div class='container'>
+	{% if request.user.is_authenticated %}
 	<a href='{% url "home" %}'>Home</a>
 	<a href='{% url "locations:list" %}'>Locations</a>
 	<a href='{% url "items:list" %}'>Items</a>
+	{% endif %}
 </div>

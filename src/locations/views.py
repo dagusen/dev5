@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.shortcuts import render
 
 from .forms import LocationCreateForm
@@ -16,15 +18,15 @@ from .models import Location
 
 # Create your views here.
 
-class LocationListView(ListView):
+class LocationListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		return Location.objects.filter(user=self.request.user)
 
-class LocationDetailView(DetailView):
+class LocationDetailView(LoginRequiredMixin, DetailView):
 	def get_queryset(self):
 		return Location.objects.filter(user=self.request.user)
 
-class LocationCreateView(CreateView):
+class LocationCreateView(LoginRequiredMixin, CreateView):
 	form_class = LocationCreateForm
 	template_name = 'form.html'
 
@@ -39,7 +41,7 @@ class LocationCreateView(CreateView):
 		context['title'] = 'Add Location'
 		return context
 
-class LocationUpdateView(UpdateView):
+class LocationUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = LocationCreateForm
 	template_name = 'locations/detail-update.html'
 

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.shortcuts import render
 
 from django.views.generic import (
@@ -16,15 +18,15 @@ from .models import Item
 
 # Create your views here.
 
-class ItemListView(ListView):
+class ItemListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		return Item.objects.filter(user=self.request.user)
 
-class ItemDetailView(DetailView):
+class ItemDetailView(LoginRequiredMixin, DetailView):
 	def get_queryset(self):
 		return Item.objects.filter(user=self.request.user)
 
-class ItemCreateView(CreateView):
+class ItemCreateView(LoginRequiredMixin, CreateView):
 	form_class = ItemCreateForm
 	template_name = 'form.html'
 
@@ -46,7 +48,7 @@ class ItemCreateView(CreateView):
 		context['title'] = 'Create Item'
 		return context
 
-class ItemUpdateView(UpdateView):
+class ItemUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = ItemCreateForm
 	template_name = 'items/detail-update.html'
 	
