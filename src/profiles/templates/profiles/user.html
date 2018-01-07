@@ -26,9 +26,9 @@
 						<span class="badge badge-default"><a href='{{ request.path }}?q={{ ing }}'>{{ ing }}</a></span>
 					{% endfor %}
 				</li>
-				<p>Status: {% if item.claimed %}Claimed{% else %}Unclaimed{% endif %}</p>
+				<p>{% if item.claimed %}Claimed by {{ item.claimer }}{% else %}Unclaimed{% endif %}</p>
 				{% if request.user.is_superuser %}
-					{% if item.claimed %}
+					{% if not item.claimed %}
 						{% include 'snippets/form-snippet.html' with form=form %}
 					{% endif %}
 				{% endif %}
@@ -40,7 +40,7 @@
 {% endfor %}
 
 {% else %}
-	<p class='lead'>No Items Found</p>
+	<p class='lead'>No Items Found <small><a href="{% url 'items:create' %}">Add one</a></small></p>
 {% endif %}
 
 {% endblock %}
