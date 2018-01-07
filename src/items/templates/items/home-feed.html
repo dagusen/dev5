@@ -7,12 +7,10 @@
 	{% for obj in object_list %}
 		<div class="thumbnail">
 			<h3><a href='{% url "profile:detail" username=obj.user.username %}'>{{ obj.user.first_name }} {{ obj.user.last_name }}</a></h3>
-			<h4>{{ obj }}</h4>
+			<h4><a href='{% url "profile:detail" username=obj.user.username %}?q={{ obj.item_name }}'>{{ obj }}</a></h4>
 
-			{{ obj.location_and_Category }}<br/>
+			{{ obj.location_and_Category }}
 			
-			<a href='{{ request.path }}?q={{ obj.item_name }}'>{{ obj.item_name }}</a><br/>
-
 			<p>Detail:
 			{% for ing in obj.get_item %}
 				 <span class="badge badge-default"><a href='{% url "profile:detail" username=obj.user.username %}?q={{ ing }}'>{{ ing }}</a></span>

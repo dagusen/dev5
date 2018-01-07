@@ -25,13 +25,15 @@
 					{% for ing in item.get_item %}
 						<span class="badge badge-default"><a href='{{ request.path }}?q={{ ing }}'>{{ ing }}</a></span>
 					{% endfor %}
-					<h3>Make Changes</h3>
-						{% include 'snippets/form-snippet.html' with form=form %}
 				</li>
 				<p>Status: {% if item.claimed %}Claimed{% else %}Unclaimed{% endif %}</p>
+				{% if request.user.is_superuser %}
+					{% if item.claimed %}
+						{% include 'snippets/form-snippet.html' with form=form %}
+					{% endif %}
+				{% endif %}
 			{% endfor %}
 		</ul>
-
 		</div>
 	</div>
 	</div>

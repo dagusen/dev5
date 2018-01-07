@@ -14,18 +14,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from django.views.generic import (
 	ListView,
-	DetailView
+	DetailView,
+	UpdateView
 	)
 
 from locations.models import Location
 
 from items.models import Item
 
+from .forms import ItemClaimForm
+
 User = get_user_model()
 
 # Create your views here.
 
-class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+	form_class = ItemClaimForm
 	permission_required = 'profiles'
 	template_name = 'profiles/user.html'
 
@@ -46,7 +50,8 @@ class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, Detail
 			context['locations'] = qs
 		return context
 
-class ProfileDetailView(LoginRequiredMixin, DetailView):
+class ProfileDetailView(LoginRequiredMixin, UpdateView):
+	form_class = ItemClaimForm
 	template_name = 'profiles/user.html'
 
 	def get_object(self):
