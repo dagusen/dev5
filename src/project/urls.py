@@ -33,13 +33,15 @@ from django.contrib.auth.views import(
     PasswordResetCompleteView,
     )
 
+from items.views import HomeView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^locations/', include('locations.urls', namespace='locations')),
     url(r'^items/', include('items.urls', namespace='items')),
     url(r'^u/', include('profiles.urls', namespace='profile')),
 
-    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^$', HomeView.as_view(), name='home'),
 
     # login
     url(r'^login/$', LoginView.as_view(), name='login'),

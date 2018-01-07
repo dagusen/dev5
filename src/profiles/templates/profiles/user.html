@@ -21,10 +21,10 @@
 		<ul>
 			{% for item in loc.item_set.all %}
 				<li style="margin-bottom: 15px">
-					<b>{{ item.item_name }}</b><br/>
-					<ul>
-						<li style="margin-bottom: 15px"><p>{{ item.item_detail }}</p></li>
-					</ul>
+					<b><a href='{{ request.path }}?q={{ item.item_name }}'>{{ item.item_name }}</a></b><br/>
+					{% for ing in item.get_item %}
+						<span class="badge badge-default"><a href='{{ request.path }}?q={{ ing }}'>{{ ing }}</a></span>
+					{% endfor %}
 				</li>
 			{% endfor %}
 		</ul>

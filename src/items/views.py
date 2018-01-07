@@ -18,7 +18,12 @@ from .models import Item
 
 # Create your views here.
 
-
+class HomeView(ListView):
+	def get(self, request, *args, **kwargs):
+		if not request.user.is_authenticated():
+			return render(request, "home.html", {})
+		qs = Item.objects.filter(claimed=False).order_by("-updated")[:10]
+		return render(request, "items/home-feed.html", {'object_list':qs})
 
 class ItemListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
