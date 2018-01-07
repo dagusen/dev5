@@ -3,5 +3,6 @@
 	<a href='{% url "home" %}'>Home</a>
 	<a href='{% url "locations:list" %}'>Locations</a>
 	<a href='{% url "items:list" %}'>Items</a>
+	<a href='{% url "profile:detail" username=user.username %}'>My profile</a>
 	{% endif %}
 </div>
