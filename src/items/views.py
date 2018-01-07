@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (
+	LoginRequiredMixin,
+	PermissionRequiredMixin
+	)
 
 from django.shortcuts import render
 
@@ -25,9 +28,19 @@ class HomeView(ListView):
 		qs = Item.objects.filter(claimed=False).order_by("-updated")[:10]
 		return render(request, "items/home-feed.html", {'object_list':qs})
 
+class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+	permission_required = 'items'
+	def get_queryset(self):
+		return Item.objects.all()
+
 class ItemListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		return Item.objects.filter(user=self.request.user)
+
+class ItemDetailAdminView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+	permission_required = 'items'
+	def get_queryset(self):
+		return Item.objects.all()
 
 class ItemDetailView(LoginRequiredMixin, DetailView):
 	def get_queryset(self):
