@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (
+	LoginRequiredMixin,
+	PermissionRequiredMixin
+	)
 
 from django.shortcuts import render
 
@@ -17,6 +20,11 @@ from django.views.generic import (
 from .models import Location
 
 # Create your views here.
+
+class LocationListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+	permission_required = 'locations'
+	def get_queryset(self):
+		return Location.objects.all()
 
 class LocationListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
@@ -41,6 +49,9 @@ class LocationCreateView(LoginRequiredMixin, CreateView):
 		context['title'] = 'Add Location'
 		return context
 
+	def get_queryset(self):
+		return Location.objects.all()
+
 class LocationUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = LocationCreateForm
 	template_name = 'locations/detail-update.html'
@@ -54,3 +65,17 @@ class LocationUpdateView(LoginRequiredMixin, UpdateView):
 
 	def get_queryset(self):
 		return Location.objects.filter(user=self.request.user)
+
+class LocationUpdateViewAdmin(LoginRequiredMixin, UpdateView):
+	form_class = LocationCreateForm
+	template_name = 'locations/detail-update.html'
+
+	# context for html title
+	def get_context_data(self, *args, **kwargs):
+		context = super(LocationUpdateViewAdmin, self).get_context_data(*args, **kwargs)
+		name = self.get_object().location
+		context['title'] = 'Update Location:%s'% name
+		return context
+
+	def get_queryset(self):
+		return Location.objects.all()

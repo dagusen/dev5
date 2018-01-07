@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (
+	LoginRequiredMixin,
+	PermissionRequiredMixin
+	)
 
 from django.contrib.auth import get_user_model
 
@@ -22,7 +25,28 @@ User = get_user_model()
 
 # Create your views here.
 
-class ProfileDetailView(DetailView):
+class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+	permission_required = 'profiles'
+	template_name = 'profiles/user.html'
+
+	def get_object(self):
+		username = self.kwargs.get("username")
+		if username is None:
+			raise Http404
+		return get_object_or_404(User, username__iexact=username, is_active=True)
+
+	def get_context_data(self, *args, **kwargs):
+		context =super(ProfileDetailViewAdmin, self).get_context_data(*args, **kwargs)
+		user = context['user']
+		
+		query = self.request.GET.get('q')
+		item_exists = Item.objects.all().exists()
+		qs = Location.objects.all().search(query)
+		if item_exists and qs.exists():
+			context['locations'] = qs
+		return context
+
+class ProfileDetailView(LoginRequiredMixin, DetailView):
 	template_name = 'profiles/user.html'
 
 	def get_object(self):

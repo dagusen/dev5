@@ -17,4 +17,4 @@ class ItemCreateForm(forms.ModelForm):
 		
 	def __init__(self, user=None, *args, **kwargs):
 		super(ItemCreateForm, self).__init__(*args, **kwargs)
-		self.fields['location_and_Category'].queryset = Location.objects.filter(user=user)
+		self.fields['location_and_Category'].queryset = Location.objects.all()

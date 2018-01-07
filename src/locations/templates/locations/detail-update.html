@@ -6,9 +6,8 @@
 <h1>{{ form.instance.title }}</h1>
 <p>{{ form.instance.category }}</p>
 <small>{{ form.instance.timestamp }}, Updated {{ form.instance.updated|timesince }} ago</small>
-{% if user.is_superuser %}
+
 <hr/>
 <h3>Make Changes</h3>
 {% include 'snippets/form-snippet.html' with form=form %}
-{% endif %}
 {% endblock %}

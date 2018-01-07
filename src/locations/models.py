@@ -26,7 +26,7 @@ class LocationQuerySet(models.query.QuerySet):
 			return self.filter(
 				Q(location__icontains=query)|
 				Q(category__icontains=query)|
-				Q(item__item_name__iexact=query)|
+				Q(item__item_name__icontains=query)|
 				Q(item__item_detail__icontains=query)|
 				Q(item__claimer__icontains=query)
 				).distinct()

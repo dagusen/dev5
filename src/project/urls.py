@@ -33,7 +33,7 @@ from django.contrib.auth.views import(
     PasswordResetCompleteView,
     )
 
-from items.views import HomeView
+from items.views import HomeView, ClaimedView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -42,6 +42,8 @@ urlpatterns = [
     url(r'^u/', include('profiles.urls', namespace='profile')),
 
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^claimed/$', ClaimedView.as_view(), name='claimed'),
+
 
     # login
     url(r'^login/$', LoginView.as_view(), name='login'),

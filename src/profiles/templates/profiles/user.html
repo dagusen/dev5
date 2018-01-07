@@ -16,7 +16,7 @@
 	<div class="row">
 	<div class="col-sm-12"">
 		<div class="thumbnail">
-		<h4>{{ loc.title }}</h4>
+		<h4>{{ loc.title }}{% if request.user.is_superuser %} <small>{{ loc.user.username }}</small>{% endif %}</h4>
 		<small><a href='{{ request.path }}?q={{ loc.location }}'>{{ loc.location }}</a> | <a href='{{ request.path }}?q={{ loc.category }}'>{{ loc.category }}</a></small>
 		<ul>
 			{% for item in loc.item_set.all %}
@@ -25,12 +25,18 @@
 					{% for ing in item.get_item %}
 						<span class="badge badge-default"><a href='{{ request.path }}?q={{ ing }}'>{{ ing }}</a></span>
 					{% endfor %}
+					<h3>Make Changes</h3>
+						{% include 'snippets/form-snippet.html' with form=form %}
 				</li>
+				<p>Status: {% if item.claimed %}Claimed{% else %}Unclaimed{% endif %}</p>
 			{% endfor %}
 		</ul>
+
 		</div>
 	</div>
 	</div>
+
+
 	
 {% endfor %}
 

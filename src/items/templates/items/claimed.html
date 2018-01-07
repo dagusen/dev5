@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<h1>Claimed Items</h1>
 <div class="row">
 	<div class="col-sm-12 text-center col-sm-offset-3">
 	{% for obj in object_list %}
@@ -9,15 +9,14 @@
 			<h3><a href='{% url "profile:detail" username=obj.user.username %}'>{{ obj.user.first_name }} {{ obj.user.last_name }}</a></h3>
 			<h4>{{ obj }}</h4>
 
-			{{ obj.location_and_Category }}<br/>
-			
-			<a href='{{ request.path }}?q={{ obj.item_name }}'>{{ obj.item_name }}</a><br/>
-
-			<p>Detail:
+			<p>Location and Category: {{ obj.location_and_Category }}<br/>
+			Item_name: {{ obj.item_name }}<br/>
+			Detail:
 			{% for ing in obj.get_item %}
 				 <span class="badge badge-default"><a href='{% url "profile:detail" username=obj.user.username %}?q={{ ing }}'>{{ ing }}</a></span>
 			{% endfor %}
 			<br/>Returner: {{ obj.user.first_name }} {{ obj.user.last_name }}<br/>
+			Claimer: {{ obj.claimer }}<br/>
 			<small>{{ obj.category }} Time published: {{ obj.timestamp }} Updated {{ obj.updated|timesince }} ago</small>
 			</p>
 		</div>

@@ -19,6 +19,8 @@ from .forms import ItemCreateForm
 
 from .models import Item
 
+from locations.models import Location
+
 # Create your views here.
 
 class HomeView(ListView):
@@ -27,6 +29,13 @@ class HomeView(ListView):
 			return render(request, "home.html", {})
 		qs = Item.objects.filter(claimed=False).order_by("-updated")[:10]
 		return render(request, "items/home-feed.html", {'object_list':qs})
+
+class ClaimedView(ListView):
+	def get(self, request, *args, **kwargs):
+		if not request.user.is_authenticated():
+			return render(request, "home.html", {})
+		qs = Item.objects.filter(claimed=True).order_by("-updated")[:10]
+		return render(request, "items/claimed.html", {'object_list':qs})
 
 class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 	permission_required = 'items'
@@ -85,5 +94,26 @@ class ItemUpdateView(LoginRequiredMixin, UpdateView):
 	#giving data
 	def get_form_kwargs(self):
 		kwargs = super(ItemUpdateView, self).get_form_kwargs()
+		kwargs['user'] = self.request.user
+		return kwargs
+
+class ItemUpdateViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+	permission_required = 'items'
+	form_class = ItemCreateForm
+	template_name = 'items/detail-update.html'
+	
+	def get_queryset(self):
+		return Item.objects.all()
+
+	# context for html title
+	def get_context_data(self, *args, **kwargs):
+		context = super(ItemUpdateViewAdmin, self).get_context_data(*args, **kwargs)
+		context['title'] = 'Update Item'
+		return context
+
+	#for user checking if login of not
+	#giving data
+	def get_form_kwargs(self):
+		kwargs = super(ItemUpdateViewAdmin, self).get_form_kwargs()
 		kwargs['user'] = self.request.user
 		return kwargs
