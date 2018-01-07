@@ -21,7 +21,7 @@ class Item(models.Model):
 	user					= models.ForeignKey(User)
 	location_and_Category	= models.ForeignKey(Location)
 	item_name				= models.CharField(max_length=120)
-	returner				= models.CharField(max_length=120)
+	item_detail 			= models.TextField(help_text='seperate each item by comma', null=True, blank=True)
 	claimer					= models.CharField(max_length=120, null=True, blank=True)
 	claimed					= models.BooleanField(default=False)
 	timestamp				= models.DateTimeField(auto_now_add=True)
@@ -33,6 +33,9 @@ class Item(models.Model):
 
 	class Meta:
 		ordering = ['-updated', '-timestamp']
+
+	def get_item(self):
+		return self.item_detail.split(",")
 
 	def get_absolute_url(self):
 		return reverse('items:edit', kwargs={'slug': self.slug})

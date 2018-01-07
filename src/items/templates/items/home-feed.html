@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-sm-12 text-center col-sm-offset-3">
+	{% for obj in object_list %}
+		<div class="thumbnail">
+			<h3><a href='{% url "profile:detail" username=obj.user.username %}'>{{ obj.user.username }}</a></h3>
+			<h4>{{ obj }}</h4>
+
+			{{ obj.location.location }}a
+
+		</div>
+	{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^locations/', include('locations.urls', namespace='locations')),
     url(r'^items/', include('items.urls', namespace='items')),
-    url(r'^u/', include('profiles.urls', namespace='u')),
+    url(r'^u/', include('profiles.urls', namespace='profile')),
 
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
 

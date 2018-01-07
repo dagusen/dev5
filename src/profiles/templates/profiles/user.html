@@ -22,6 +22,9 @@
 			{% for item in loc.item_set.all %}
 				<li style="margin-bottom: 15px">
 					<b>{{ item.item_name }}</b><br/>
+					<ul>
+						<li style="margin-bottom: 15px"><p>{{ item.item_detail }}</p></li>
+					</ul>
 				</li>
 			{% endfor %}
 		</ul>

@@ -10,7 +10,7 @@ class ItemCreateForm(forms.ModelForm):
 		fields = [
 			'location_and_Category',
 			'item_name',
-			'returner',
+			'item_detail',
 			'claimer',
 			'claimed'
 		]
