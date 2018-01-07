@@ -10,9 +10,7 @@ class ItemCreateForm(forms.ModelForm):
 		fields = [
 			'location_and_Category',
 			'item_name',
-			'item_detail',
-			'claimer',
-			'claimed'
+			'item_detail'
 		]
 		
 	def __init__(self, user=None, *args, **kwargs):

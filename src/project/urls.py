@@ -35,6 +35,8 @@ from django.contrib.auth.views import(
 
 from items.views import HomeView, ClaimedView
 
+from profiles.views import RegisterView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^locations/', include('locations.urls', namespace='locations')),
@@ -51,7 +53,7 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
 
     #  # register
-    # url(r'^register/$', RegisterView.as_view(), name='register'),
+    url(r'^register/$', RegisterView.as_view(), name='register'),
 
     url(r'^password_change/$', PasswordChangeView.as_view(template_name='registration/password_change_form.html'),name='password_change'),
     url(r'^password_change/done/$', PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html'), name='password_change_done'),

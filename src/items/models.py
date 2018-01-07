@@ -22,7 +22,7 @@ class Item(models.Model):
 	location_and_Category	= models.ForeignKey(Location)
 	item_name				= models.CharField(max_length=120)
 	item_detail 			= models.TextField(help_text='seperate each item by comma', null=True, blank=True)
-	claimer					= models.CharField(max_length=120, null=True, blank=True)
+	claimer					= models.CharField(max_length=120, null=True, blank=True, help_text='do not forget to put a claimer')
 	claimed					= models.BooleanField(default=False)
 	timestamp				= models.DateTimeField(auto_now_add=True)
 	updated					= models.DateTimeField(auto_now=True)

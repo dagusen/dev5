@@ -15,18 +15,29 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import (
 	ListView,
 	DetailView,
-	UpdateView
+	UpdateView,
+	CreateView
 	)
 
 from locations.models import Location
 
 from items.models import Item
 
-from .forms import ItemClaimForm
+from .forms import ItemClaimForm, RegisterForm
 
 User = get_user_model()
 
 # Create your views here.
+
+class RegisterView(CreateView):
+	form_class = RegisterForm
+	template_name = 'registration/register.html'
+	success_url = '/'
+
+	def dispatch(self, *args, **kwargs):
+		if self.request.user.is_authenticated():
+			return redirect("/logout")
+		return super(RegisterView, self).dispatch(*args, **kwargs)
 
 class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 	form_class = ItemClaimForm

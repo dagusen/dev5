@@ -97,7 +97,7 @@ class ItemUpdateView(LoginRequiredMixin, UpdateView):
 		kwargs['user'] = self.request.user
 		return kwargs
 
-class ItemUpdateViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class ItemUpdateViewAdmin(LoginRequiredMixin, UpdateView):
 	permission_required = 'items'
 	form_class = ItemCreateForm
 	template_name = 'items/detail-update.html'

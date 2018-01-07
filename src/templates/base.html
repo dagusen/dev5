@@ -4,8 +4,10 @@
 	<title>{% block head_title %}NDMC Item Finder{% endblock head_title %}</title>
 	{% include 'snippets/css.html' %}
 </head>
-	<body>
+	<header>
 		{% include 'snippets/nav.html'%}
+	</header>
+	<body>
 		<div class='container'>
 			{% block content %}{% endblock content %}
 		</div>
