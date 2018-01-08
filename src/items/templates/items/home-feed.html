@@ -10,6 +10,8 @@
 		<div class="thumbnail">
 			<h3><a href='{% url "profile:detail" username=obj.user.username %}'>{{ obj.user.first_name }} {{ obj.user.last_name }}</a></h3>
 			<h4><a href='{% url "profile:detail" username=obj.user.username %}?q={{ obj.item_name }}'>{{ obj }}</a></h4>
+			
+			<p><img src="{{ obj.MEDIA_URL }}{{ obj.item_picture.url }}" width="300px"></p>
 
 			{{ obj.location_and_Category }}
 			

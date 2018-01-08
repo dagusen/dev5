@@ -101,14 +101,6 @@ class ItemUpdateViewAdmin(LoginRequiredMixin, UpdateView):
 	permission_required = 'items'
 	form_class = ItemCreateForm
 	template_name = 'items/detail-update.html'
-	
-	def model_form_upload(request):
-		if request.method == 'POST':
-			form = ItemCreateForm(request.POST, request.FILES)
-			if form.is_valid():
-				form.save()
-			else:
-				form = ItemCreateForm()
 
 	def get_queryset(self):
 		return Item.objects.all()
