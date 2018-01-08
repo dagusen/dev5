@@ -24,3 +24,5 @@ class Profile(models.Model):
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
 	if created:
 		profile, is_created = Profile.objects.get_or_create(user=instance)
+
+post_save.connect(post_save_user_receiver, sender=Profile)

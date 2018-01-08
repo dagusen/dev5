@@ -1,11 +1,11 @@
-<div class='container'>
+<div class='container col-sm-12 text-center col-sm-offset-3'>
 	{% if request.user.is_authenticated %}
 		{% if request.user.is_superuser %}
 			<a href='{% url "home" %}'>Home</a> |
 			<a href='{% url "claimed" %}'>Claimed</a> |
 			<a href='{% url "locations:location" %}'>Locations</a> |
 			<a href='{% url "items:item" %}'>Items</a> |
-			<a href='{% url "profile:details" username=user.username %}'>Lists</a> |
+			<a href='{% url "profile:details" username=user.username %}'>List of items</a> |
 			<a href='{% url "logout" %}'>Logout</a>
 		{% else %}
 			<a href='{% url "home" %}'>Home</a> |
