@@ -21,6 +21,7 @@ class Item(models.Model):
 	user					= models.ForeignKey(User)
 	location_and_Category	= models.ForeignKey(Location)
 	item_name				= models.CharField(max_length=120)
+	item_picture			= models.ImageField(upload_to = 'static/media')#, default = 'pic_folder/None/no-img.jpg')
 	item_detail 			= models.TextField(help_text='seperate each item by comma', null=True, blank=True)
 	claimer					= models.CharField(max_length=120, null=True, blank=True, help_text='do not forget to put a claimer')
 	claimed					= models.BooleanField(default=False)

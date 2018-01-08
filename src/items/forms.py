@@ -10,6 +10,7 @@ class ItemCreateForm(forms.ModelForm):
 		fields = [
 			'location_and_Category',
 			'item_name',
+			'item_picture',
 			'item_detail'
 		]
 		

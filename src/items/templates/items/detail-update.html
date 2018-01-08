@@ -7,6 +7,10 @@
 
 <h1>{{ form.instance.title }}</h1>
 <p>Location and category: {{ form.instance.location_and_Category }}</p>
+<p><img src="{{ form.instance.MEDIA_URL }}{{ form.instance.item_picture.url }}" width="300px"></p>
+
+<p>{{ form.instance.MEDIA_URL }}{{ form.instance.item_picture.url }}</p>
+
 <small>{{ form.instance.timestamp }}, Updated {{ form.instance.updated|timesince }} ago</small>
 
 <hr/>
