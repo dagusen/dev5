@@ -4,11 +4,18 @@
 
 
 {% block content %}
+
+<form class='form' method='GET' action='.'>
+	<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
+	<button class='btn btn-default' type='submit'>Search</button>
+</form>
+
 <h1>Items <small><a href="{% url 'items:create' %}">Add</a></small></h1>
 <ul>
 	{% for obj in object_list %}
 		<li><a href="{% if request.user.is_superuser %}{{ obj.get_absolute_url }}{% else %}{{ obj.get_absolute_url1 }}{% endif %}">{{ obj }}</a></br>
 			<p><img src="{{ obj.MEDIA_URL }}{{ obj.item_picture.url }}" width="300px"></p>
+			<p>Location and Categoty: {{ obj.location_and_Category }}</p>
 			<p>Detail Item: {{ obj.item_detail }}</p>
 			<p>{% if form.instance.claimed %}Claimed by {{ form.instance.claimer }}{% else %}Unclaimed{% endif %}</p>
 			<small>{{ obj.category }} Time published: {{ obj.timestamp }} Updated {{ obj.updated|timesince }} ago</small>
