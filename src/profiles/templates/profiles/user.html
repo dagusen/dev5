@@ -31,8 +31,10 @@
 					{% endfor %}
 				</li>
 				<p>{% if item.claimed %}Claimed by {{ item.claimer }}{% else %}Unclaimed{% endif %}</p>
-				{% if not item.claimed %}
-				<a href="{{ item.get_absolute_url }}">Claim Item</a>
+				{% if request.user.is_superuser %}
+					{% if not item.claimed %}
+						<a href="{{ item.get_absolute_url }}">Claim Item</a>
+					{% endif %}
 				{% endif %}
 			{% endfor %}
 		</ul>
