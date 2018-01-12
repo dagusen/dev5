@@ -2,21 +2,9 @@ from django import forms
 
 from django.contrib.auth import get_user_model
 
-from locations.models import Location
-
 from .models import Profile
 
-from items.models import Item
-
 User = get_user_model()
-
-class ItemClaimForm(forms.ModelForm):
-	class Meta:
-		model = Item
-		fields = [
-			'claimer',
-			'claimed'
-		]
 
 class RegisterForm(forms.ModelForm):
 	"""A form for creating new users. Includes all the required fields, plus a repeated password."""

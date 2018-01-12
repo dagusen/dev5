@@ -22,16 +22,14 @@
 			{% for item in loc.item_set.all %}
 				<li style="margin-bottom: 15px">
 					<b><a href='{{ request.path }}?q={{ item.item_name }}'>{{ item.item_name }}</a></b><br/>
+					{% if item.item_picture.url %}
+						<p><img src="{{ item.MEDIA_URL }}{{ item.item_picture.url }}" width="300px"></p>
+					{% endif %}
 					{% for ing in item.get_item %}
 						<span class="badge badge-default"><a href='{{ request.path }}?q={{ ing }}'>{{ ing }}</a></span>
 					{% endfor %}
 				</li>
 				<p>{% if item.claimed %}Claimed by {{ item.claimer }}{% else %}Unclaimed{% endif %}</p>
-				{% if request.user.is_superuser %}
-					{% if not item.claimed %}
-						{% include 'snippets/form-snippet.html' with form=form %}
-					{% endif %}
-				{% endif %}
 			{% endfor %}
 		</ul>
 		</div>

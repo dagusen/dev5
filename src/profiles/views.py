@@ -23,7 +23,7 @@ from locations.models import Location
 
 from items.models import Item
 
-from .forms import ItemClaimForm, RegisterForm
+from .forms import RegisterForm
 
 User = get_user_model()
 
@@ -39,8 +39,7 @@ class RegisterView(CreateView):
 			return redirect("/logout")
 		return super(RegisterView, self).dispatch(*args, **kwargs)
 
-class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
-	form_class = ItemClaimForm
+class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
 	permission_required = 'profiles'
 	template_name = 'profiles/user.html'
 
@@ -61,8 +60,7 @@ class ProfileDetailViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, Update
 			context['locations'] = qs
 		return context
 
-class ProfileDetailView(LoginRequiredMixin, UpdateView):
-	form_class = ItemClaimForm
+class ProfileDetailView(LoginRequiredMixin, DetailView):
 	template_name = 'profiles/user.html'
 
 	def get_object(self):
