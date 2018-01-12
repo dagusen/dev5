@@ -41,6 +41,9 @@ class Item(models.Model):
 	def get_absolute_url(self):
 		return reverse('items:edit', kwargs={'slug': self.slug})
 
+	def get_absolute_url1(self):
+		return reverse('items:listitem', kwargs={'slug': self.slug})
+
 	@property
 	def title(self):
 		return self.item_name

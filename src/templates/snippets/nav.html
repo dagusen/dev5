@@ -5,7 +5,7 @@
 			<a href='{% url "claimed" %}'>Claimed</a> |
 			<a href='{% url "locations:location" %}'>Locations</a> |
 			<a href='{% url "items:item" %}'>Items</a> |
-			<a href='{% url "profile:details" username=user.username %}'>List of items</a> |
+			<a href='{% url "profile:details" username=user.username %}'>{{ user.first_name }} {{ user.last_name }}</a> |
 			<a href='{% url "logout" %}'>Logout</a>
 		{% else %}
 			<a href='{% url "home" %}'>Home</a> |

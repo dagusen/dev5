@@ -15,7 +15,7 @@ from django.views.generic import (
 	UpdateView
 	)
 
-from .forms import ItemCreateForm
+from .forms import ItemCreateForm, ItemClaimForm
 
 from .models import Item
 
@@ -97,9 +97,9 @@ class ItemUpdateView(LoginRequiredMixin, UpdateView):
 		kwargs['user'] = self.request.user
 		return kwargs
 
-class ItemUpdateViewAdmin(LoginRequiredMixin, UpdateView):
+class ItemUpdateViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 	permission_required = 'items'
-	form_class = ItemCreateForm
+	form_class = ItemClaimForm
 	template_name = 'items/detail-update.html'
 
 	def get_queryset(self):
