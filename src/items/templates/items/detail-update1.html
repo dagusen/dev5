@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block head_title %}{{ form.instance.title }} | Items | {{ block.super }}{% endblock head_title %}
+
+{% block content %}
+
+<h1>{{ form.instance.title }}</h1>
+<p>Location and category: {{ form.instance.location_and_Category }}</p>
+<p>Detail Item: {{ form.instance.item_detail }}</p>
+
+{% if form.instance.item_picture.url %}
+<p><img src="{{ form.instance.MEDIA_URL }}{{ form.instance.item_picture.url }}" width="300px"></p>
+{% endif %}
+<!-- <p>{{ form.instance.MEDIA_URL }}{{ form.instance.item_picture.url }}</p> -->
+
+<p>{% if form.instance.claimed %}Claimed by {{ form.instance.claimer }}{% else %}Unclaimed{% endif %}</p>
+
+<small>{{ form.instance.timestamp }}, Updated {{ form.instance.updated|timesince }} ago</small>
+{% if request.user.is_superuser %}
+<hr/>
+<h3>Make Changes</h3>
+{% include 'snippets/form-snippet.html' with form=form %}
+{% endif %}
+{% endblock %}

@@ -4,6 +4,8 @@ from locations.models import Location
 
 from .models import Item
 
+from django.forms import ModelForm, Textarea
+
 class ItemCreateForm(forms.ModelForm):
 	class Meta:
 		model = Item
@@ -26,15 +28,13 @@ class ItemClaimForm(forms.ModelForm):
 			'item_name',
 			'item_picture',
 			'item_detail',
-			if self.request.user.is_authenticated():
-				'claimer',
-				'claimed'
+			'claimer',
+			'claimed'
 		]
 		
 	def __init__(self, user=None, *args, **kwargs):
 		super(ItemClaimForm, self).__init__(*args, **kwargs)
 		self.fields['location_and_Category'].queryset = Location.objects.all()
-
 
 	def save(self, commit=True):
 		#Save the provided password in hashed format

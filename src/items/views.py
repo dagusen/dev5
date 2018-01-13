@@ -100,7 +100,7 @@ class ItemUpdateView(LoginRequiredMixin, UpdateView):
 class ItemUpdateViewAdmin(LoginRequiredMixin, UpdateView):
 	permission_required = 'items'
 	form_class = ItemClaimForm
-	template_name = 'items/detail-update.html'
+	template_name = 'items/detail-update1.html'
 
 	def get_queryset(self):
 		return Item.objects.all()
