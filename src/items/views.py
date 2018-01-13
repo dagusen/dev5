@@ -40,7 +40,7 @@ class ClaimedView(ListView):
 class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 	permission_required = 'items'
 	def get_queryset(self):
-		return Item.objects.filter(claimed=False).order_by("-updated")
+		return Item.objects.filter(claimed=True).order_by("-updated")
 
 class ItemListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
