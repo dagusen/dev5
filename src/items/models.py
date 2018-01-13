@@ -9,6 +9,8 @@ from django.db.models.signals import pre_save
 
 from django.core.urlresolvers import reverse
 
+from django.core.mail import send_mail
+
 from locations.utils import unique_slug_generator
 
 from locations.models import Location
