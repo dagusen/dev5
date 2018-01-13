@@ -4,11 +4,15 @@ from django.contrib.auth import get_user_model
 
 from .models import Profile
 
+from django.core.validators import RegexValidator
+
+# from django.core.validators import email_re
+
 User = get_user_model()
 
 class RegisterForm(forms.ModelForm):
 	"""A form for creating new users. Includes all the required fields, plus a repeated password."""
-	password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+	password1 = forms.CharField(label='Password',min_length=8, widget=forms.PasswordInput, validators=[RegexValidator('^(\w+\d+|\d+\w+)+$', message="Password should be a combination of Alphabets and Numbers")])
 	password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
 	class Meta:
@@ -35,6 +39,7 @@ class RegisterForm(forms.ModelForm):
 		if qs.exists():
 			raise forms.ValidationError("Cannot use this email. It's already register")
 		return email
+		# return bool(email_re.match(email))
 
 	def clean_username(self):
 		username = self.cleaned_data.get("username")
@@ -50,8 +55,6 @@ class RegisterForm(forms.ModelForm):
 		if password1 and password2 and password1 != password2:
 			raise forms.ValidationError("Passwords don't match")
 		return password2
-
-	
 
 	def save(self, commit=True):
 		#Save the provided password in hashed format

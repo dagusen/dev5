@@ -32,4 +32,18 @@ class ItemClaimForm(forms.ModelForm):
 		
 	def __init__(self, user=None, *args, **kwargs):
 		super(ItemClaimForm, self).__init__(*args, **kwargs)
+
+		# user.item.send_claim_email()
 		self.fields['location_and_Category'].queryset = Location.objects.all()
+
+
+	def save(self, commit=True):
+		#Save the provided password in hashed format
+		user = super(ItemClaimForm, self).save(commit=False)
+
+		if commit:
+			user.save()
+			#create a new user hash for activating email
+			user.send_claim_email()
+			
+		return user
