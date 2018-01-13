@@ -27,24 +27,24 @@ class HomeView(ListView):
 	def get(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return render(request, "home.html", {})
-		qs = Item.objects.filter(claimed=False).order_by("-updated")[:10]
+		qs = Item.objects.filter(claimed=False).order_by("-updated")
 		return render(request, "items/home-feed.html", {'object_list':qs})
 
 class ClaimedView(ListView):
 	def get(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return render(request, "home.html", {})
-		qs = Item.objects.filter(claimed=True).order_by("-updated")[:10]
+		qs = Item.objects.filter(claimed=True).order_by("-updated")
 		return render(request, "items/claimed.html", {'object_list':qs})
 
 class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 	permission_required = 'items'
 	def get_queryset(self):
-		return Item.objects.all()
+		return Item.objects.filter(claimed=False).order_by("-updated")
 
 class ItemListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
-		return Item.objects.filter(user=self.request.user)
+		return Item.objects.filter(user=self.request.user, claimed=True).order_by("-updated")
 
 class ItemDetailAdminView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
 	permission_required = 'items'
