@@ -26,14 +26,13 @@ class ItemClaimForm(forms.ModelForm):
 			'item_name',
 			'item_picture',
 			'item_detail',
-			'claimer',
-			'claimed'
+			if self.request.user.is_authenticated():
+				'claimer',
+				'claimed'
 		]
 		
 	def __init__(self, user=None, *args, **kwargs):
 		super(ItemClaimForm, self).__init__(*args, **kwargs)
-
-		# user.item.send_claim_email()
 		self.fields['location_and_Category'].queryset = Location.objects.all()
 
 

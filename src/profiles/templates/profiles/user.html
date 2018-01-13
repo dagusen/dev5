@@ -33,7 +33,7 @@
 				<p>{% if item.claimed %}Claimed by {{ item.claimer }}{% else %}Unclaimed{% endif %}</p>
 				{% if request.user.is_superuser %}
 					{% if not item.claimed %}
-						<a href="{{ item.get_absolute_url1 }}">Claim Item</a>
+						<a href="{% if request.user.is_superuser %}{{ item.get_absolute_url }}{% else %}{{ item.get_absolute_url1 }}{% endif %}">Claim Item</a>
 					{% endif %}
 				{% endif %}
 			{% endfor %}

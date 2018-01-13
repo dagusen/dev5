@@ -44,7 +44,7 @@ class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 
 class ItemListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
-		return Item.objects.filter(user=self.request.user, claimed=True).order_by("-updated")
+		return Item.objects.filter(user=self.request.user, claimed=False).order_by("-updated")
 
 class ItemDetailAdminView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
 	permission_required = 'items'
@@ -97,7 +97,7 @@ class ItemUpdateView(LoginRequiredMixin, UpdateView):
 		kwargs['user'] = self.request.user
 		return kwargs
 
-class ItemUpdateViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class ItemUpdateViewAdmin(LoginRequiredMixin, UpdateView):
 	permission_required = 'items'
 	form_class = ItemClaimForm
 	template_name = 'items/detail-update.html'
@@ -115,5 +115,4 @@ class ItemUpdateViewAdmin(PermissionRequiredMixin, LoginRequiredMixin, UpdateVie
 	#giving data
 	def get_form_kwargs(self):
 		kwargs = super(ItemUpdateViewAdmin, self).get_form_kwargs()
-		kwargs['user'] = self.request.user
 		return kwargs
