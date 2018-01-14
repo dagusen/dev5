@@ -18,7 +18,13 @@
 			{% include 'snippets/search-snippet.html'%}
 		{% endif %}
 	{% else %}
-	<a href='{% url "login" %}'>Login</a> |
-	<a href='{% url "register" %}'>Register</a>
+	 <div class="inner">
+		<a href='{% url "home" %}'>
+			<h3 class="masthead-brand">Welcome</h3>
+		</a>
+		<nav class="nav nav-masthead">
+			<a class="nav-link active btn" href='{% url "register" %}'>Register</a>
+		</nav>
+	</div>
 	{% endif %}
 </div>
