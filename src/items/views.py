@@ -42,6 +42,16 @@ class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		return Item.objects.filter(claimed=True).order_by("-updated")
 
+	def get_context_data(self, *args, **kwargs):
+		context =super(ItemListAdminView, self).get_context_data(*args, **kwargs)
+		
+		query = self.request.GET.get('q')
+		item_exists = Item.objects.all().exists()
+		qs = Location.objects.all().search(query)
+		if item_exists and qs.exists():
+			context['object_list'] = qs
+		return context
+
 class ItemListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		return Item.objects.filter(user=self.request.user, claimed=False).order_by("-updated")

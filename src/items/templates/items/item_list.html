@@ -5,20 +5,26 @@
 
 {% block content %}
 
+{% if object_list %}
 <h1>Items <small><a href="{% url 'items:create' %}">Add</a></small></h1>
 <ul>
 	{% for obj in object_list %}
-		<li><a href="{% if request.user.is_superuser %}{{ obj.get_absolute_url1 }}{% else %}{{ obj.get_absolute_url1 }}{% endif %}">{{ obj }}</a></br>
-			<p><img src="{{ obj.MEDIA_URL }}{{ obj.item_picture.url }}" width="300px"></p>
-			<p>Location and Categoty: {{ obj.location_and_Category }}</p>
-			<p>Detail Item: {{ obj.item_detail }}</p>
-			<p>{% if obj.claimed %}Claimed by: {{ obj.claimer }}{% else %}Unclaimed{% endif %}</p>
-			<small>{{ obj.category }} Time published: {{ obj.timestamp }} Updated {{ obj.updated|timesince }} ago</small>
+		{% for item in obj.item_set.all %}
+		<li><a href="{% if request.user.is_superuser %}{{ item.get_absolute_url1 }}{% else %}{{ item.get_absolute_url1 }}{% endif %}">{{ item }}</a></br>
+			<p><img src="{{ item.MEDIA_URL }}{{ item.item_picture.url }}" width="300px"></p>
+			<p>Location and Categoty: {{ item.location_and_Category }}</p>
+			<p>Detail Item: {{ item.item_detail }}</p>
+			<p>{% if item.claimed %}Claimed by: {{ item.claimer }}{% else %}Unclaimed{% endif %}</p>
+			<small>{{ item.category }} Time published: {{ item.timestamp }} Updated {{ item.updated|timesince }} ago</small>
 		</li>
 
 	{% empty %}
 		<li><a href="{% url 'items:create' %}">Add one</a></li>
-
+		{% endfor %}	
 	{% endfor %}	
 </ul>
+
+{% endif %}
+
+
 {% endblock %}		
