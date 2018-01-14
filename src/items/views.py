@@ -28,7 +28,11 @@ class HomeView(ListView):
 		if not request.user.is_authenticated():
 			return render(request, "home.html", {})
 		qs = Item.objects.filter(claimed=False).order_by("-updated")
-		return render(request, "items/home-feed.html", {'object_list':qs})
+		query = self.request.GET.get('q')
+		item_exists = Item.objects.all().exists()
+		qs = Location.objects.all().search(query)
+		if item_exists and qs.exists():
+			return render(request, "items/claimed.html", {'object_list':qs})
 
 class ClaimedView(LoginRequiredMixin, ListView):
 	def get(self, request, *args, **kwargs):
