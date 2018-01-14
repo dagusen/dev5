@@ -26,9 +26,27 @@ class LocationListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListVie
 	def get_queryset(self):
 		return Location.objects.all()
 
+	def get_context_data(self, *args, **kwargs):
+		context =super(LocationListAdminView, self).get_context_data(*args, **kwargs)
+		
+		query = self.request.GET.get('q')
+		qs = Location.objects.all().search(query)
+		if qs.exists():
+			context['object_list'] = qs
+		return context
+
 class LocationListView(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		return Location.objects.filter(user=self.request.user)
+
+	def get_context_data(self, *args, **kwargs):
+		context =super(LocationListView, self).get_context_data(*args, **kwargs)
+		
+		query = self.request.GET.get('q')
+		qs = Location.objects.all().search(query)
+		if qs.exists():
+			context['object_list'] = qs
+		return context
 
 class LocationDetailView(LoginRequiredMixin, DetailView):
 	def get_queryset(self):
