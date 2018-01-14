@@ -18,12 +18,9 @@
 			<small>{{ item.category }} Time published: {{ item.timestamp }} Updated {{ item.updated|timesince }} ago</small>
 		</li>
 
-	{% empty %}
-		<li><a href="{% url 'items:create' %}">Add one</a></li>
 		{% endfor %}	
 	{% endfor %}	
 </ul>
-
 {% endif %}
 
 
