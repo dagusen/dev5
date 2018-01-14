@@ -43,7 +43,7 @@ class LocationListView(LoginRequiredMixin, ListView):
 		context =super(LocationListView, self).get_context_data(*args, **kwargs)
 		
 		query = self.request.GET.get('q')
-		qs = Location.objects.all().search(query)
+		qs = Location.objects.filter(user=self.request.user).search(query)
 		if qs.exists():
 			context['object_list'] = qs
 		return context
@@ -68,7 +68,7 @@ class LocationCreateView(LoginRequiredMixin, CreateView):
 		return context
 
 	def get_queryset(self):
-		return Location.objects.all()
+		return Location.objects.filter(user=self.request.user)
 
 class LocationUpdateView(LoginRequiredMixin, UpdateView):
 	form_class = LocationCreateForm

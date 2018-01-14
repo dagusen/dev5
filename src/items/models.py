@@ -21,7 +21,7 @@ User = settings.AUTH_USER_MODEL
 
 class Item(models.Model):
 	user					= models.ForeignKey(User)
-	location_and_Category	= models.ForeignKey(Location)
+	location_and_Category	= models.ForeignKey(Location, on_delete=models.CASCADE)
 	item_name				= models.CharField(max_length=120)
 	item_picture			= models.ImageField(upload_to = 'static/media')#, default = 'pic_folder/None/no-img.jpg')
 	item_detail 			= models.TextField(help_text='seperate each item by comma', null=True, blank=True)

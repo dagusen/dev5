@@ -27,28 +27,34 @@ class HomeView(ListView):
 	def get(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return render(request, "home.html", {})
-		qs = Item.objects.filter(claimed=False).order_by("-updated")
+
 		query = self.request.GET.get('q')
-		item_exists = Item.objects.all().exists()
-		qs = Location.objects.all().search(query)
+		item_exists = Item.objects.filter(claimed=False).order_by("-updated")[:10].exists()
+		qs = Location.objects.all().order_by("-updated").search(query)
+
 		if item_exists and qs.exists():
-			return render(request, "items/claimed.html", {'object_list':qs})
+			return render(request, "items/home-feed.html", {'object_list':qs})
+		return render(request, "items/home-feed.html", {'object_list':qs})
 
 class ClaimedView(LoginRequiredMixin, ListView):
 	def get(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return render(request, "home.html", {})
-		qs = Item.objects.filter(claimed=True).order_by("-updated")
+
 		query = self.request.GET.get('q')
-		item_exists = Item.objects.all().exists()
-		qs = Location.objects.all().search(query)
+		item_exists = Item.objects.filter(claimed=True).order_by("-updated")[:10].exists()
+		qs = Location.objects.all().order_by("-updated").search(query)
+
 		if item_exists and qs.exists():
 			return render(request, "items/claimed.html", {'object_list':qs})
+		return render(request, "items/claimed.html", {'object_list':qs})
+
 
 class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 	permission_required = 'items'
+	template_name = 'item_lists.html'
 	def get_queryset(self):
-		return Item.objects.filter(claimed=True).order_by("-updated")
+		return Item.objects.filter(claimed=False).order_by("-updated")
 
 	def get_context_data(self, *args, **kwargs):
 		context =super(ItemListAdminView, self).get_context_data(*args, **kwargs)
@@ -57,7 +63,7 @@ class ItemListAdminView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
 		item_exists = Item.objects.all().exists()
 		qs = Location.objects.all().search(query)
 		if item_exists and qs.exists():
-			context['object_list'] = qs
+			context['item'] = qs
 		return context
 
 class ItemListView(LoginRequiredMixin, ListView):
@@ -71,7 +77,7 @@ class ItemListView(LoginRequiredMixin, ListView):
 		item_exists = Item.objects.all().exists()
 		qs = Location.objects.all().search(query)
 		if item_exists and qs.exists():
-			context['object_list'] = qs
+			context['item'] = qs
 		return context
 
 class ItemDetailAdminView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):

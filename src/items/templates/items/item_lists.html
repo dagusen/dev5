@@ -10,8 +10,7 @@
 {% if object_list %}
 <ul>
 	{% for item in object_list %}
-
-		<li><a href="{% if request.user.is_superuser %}{{ item.get_absolute_url1 }}{% else %}{{ item.get_absolute_url1 }}{% endif %}">{{ item }}</a></br>
+		<li><a href="{% if request.user.is_superuser %}{{ item.get_absolute_url1 }}{% else %}{{ item.get_absolute_url }}{% endif %}">{{ item }}</a></br>
 			<p><img src="{{ item.MEDIA_URL }}{{ item.item_picture.url }}" width="300px"></p>
 			<p>Location and Categoty: {{ item.location_and_Category }}</p>
 			<p>Detail Item: {{ item.item_detail }}</p>
@@ -19,9 +18,8 @@
 			<small>{{ item.category }} Time published: {{ item.timestamp }} Updated {{ item.updated|timesince }} ago</small>
 		</li>
 
-
 	{% endfor %}	
 </ul>
 {% endif %}
 
-{% endblock %}		
+{% endblock %}	

@@ -7,22 +7,26 @@
 	<h3>Lost in Found Items</h3>
 	{% if object_list %}
 	{% for obj in object_list %}
+		{% for item in obj.item_set.all %}
+		{% if not item.claimed %}
 		<div class="thumbnail">
-			<h3><a href='{% url "profile:detail" username=obj.user.username %}'>{{ obj.user.first_name }} {{ obj.user.last_name }}</a></h3>
-			<h4><a href='{% url "profile:detail" username=obj.user.username %}?q={{ obj.item_name }}'>{{ obj }}</a></h4>
+			<h3><a href='{% url "profile:detail" username=item.user.username %}'>{{ item.user.first_name }} {{ item.user.last_name }}</a></h3>
+			<h4><a href='{% url "profile:detail" username=item.user.username %}?q={{ item.item_name }}'>{{ item }}</a></h4>
 			
-			<p><img src="{{ obj.MEDIA_URL }}{{ obj.item_picture.url }}" width="300px"></p>
-
-			{{ obj.location_and_Category }}
+			<p><img src="{{ item.MEDIA_URL }}{{ item.item_picture.url }}" width="300px"></p>
+		
+				{{ item.location_and_Category }}
+					<p>Detail:
+					{% for ing in item.get_item %}
+						 <span class="badge badge-default"><a href='{% url "profile:detail" username=obj.user.username %}?q={{ ing }}'>{{ ing }}</a></span>
+				{% endfor %}
+				<br/>Returner: {{ item.user.first_name }} {{ item.user.last_name }}<br/>
+				<small>{{ item.category }} Time published: {{ item.timestamp }} Updated {{ item.updated|timesince }} ago</small>
+				</p>
 			
-			<p>Detail:
-			{% for ing in obj.get_item %}
-				 <span class="badge badge-default"><a href='{% url "profile:detail" username=obj.user.username %}?q={{ ing }}'>{{ ing }}</a></span>
-			{% endfor %}
-			<br/>Returner: {{ obj.user.first_name }} {{ obj.user.last_name }}<br/>
-			<small>{{ obj.category }} Time published: {{ obj.timestamp }} Updated {{ obj.updated|timesince }} ago</small>
-			</p>
 		</div>
+		{% endif %}
+		{% endfor %}
 	{% endfor %}
 		{% else %}
 		<p class='lead'>No Items Found</p>
