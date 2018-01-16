@@ -5,16 +5,57 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'css/nav.css' %}">
 
-<div class='col-sm-6 col-sm-offset-3'>
-	<h1>Register</h1>
-	<form method="post" action="{% url 'register' %}">{% csrf_token %}
-	{{ form.as_p }}
+{% if form.errors %}
+	<div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+	{% for field in form %}
+		{{ field.errors }}
+	{% endfor %}
+	</div>
+{% endif %}
 
-	<input type="submit" value="Register"/>
-	<input type="hidden" name="next" value="{{ next }}"/>
-	</form>
-	<!-- <p>Did you need to <a href='{% url "login" %}'>Login</a>?</p> -->
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<span class="anchor" id="formLogin"></span>
+		<!-- form card register -->
+			<div class="card card-outline-secondary">
+				<div class="card-header">
+					<h3 class="mb-0">Sign Up</h3>
+				</div>
+				<div class="card-block">
+					<form method="post" action="{% url 'register' %}" role="form" autocomplete="off">{% csrf_token %}
+						<div class="form-group">
+							<label for="inputName">{{form.username.label}}</label>
+							{{ form.username }}
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3">{{form.email.label}}</label>
+							{{ form.email }}
+						</div>
+						<div class="form-group">
+							<label for="inputName">{{form.first_name.label}}</label>
+							{{form.first_name}}
+						</div>
+						<div class="form-group">
+							<label for="inputName">{{form.last_name.label}}</label>
+							{{form.last_name}}
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3">{{form.password1.label}}</label>
+							{{form.password1}}
+						</div>
+						<div class="form-group">
+							<label for="inputVerify3">Verify</label>
+							{{form.password2}}
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-success btn-lg float-center" value="{{ next }}">Register</button>
+						</div>
+					</form>
+				</div>
+			</div>
+          <!-- /form card register -->
+		</span>
+	</div>
 </div>
-
 
 {% endblock %}

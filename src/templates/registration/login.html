@@ -5,37 +5,59 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+<!-- {% if form.non_field_errors %}
+	<div class="col-md-12 offset-md-0 alert alert-danger" role="alert">
+		<p>
+			Please enter a correct and password. Note that both<br/>
+			fields may be case-sensitive.
+		</p>
+	</div>
+{% endif %} -->
 
 {% if next %}
 	{% if user.is_authenticated %}
-		<p>Your account doesn't have to this page. To proceed, please login with an account that has access.</p>
+		<div class="col-md-12 offset-md-0 alert alert-danger" role="alert">
+			<p>Your account doesn't have to this page. To proceed, please login with an account that has access.</p>
+		</div>
 	{% else %}
-		<p>Please login to see the page</p>
+		<div class="col-md-12 offset-md-0 alert alert-danger" role="alert">
+			<p>Please login to see the page</p>
+		</div>
 	{% endif %}
 {% endif %}
 
-<form method="post" action="{% url 'login' %}">{% csrf_token %}
-{{ form.as_p }}
-<!-- <table>
-	<tr>
-		<td>{{ form.username.label_tag }}</td>
-		<td>{{ form.username }}</td>
-	</tr>
-	<tr>
-		<td>{{ form.password.label_tag }}</td>
-		<td>{{ form.password }}</td>
-	</tr>
-</table> -->
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<span class="anchor" id="formLogin"></span>
+			<!-- form card login -->
+			<div class="card card-outline-secondary">
+				<div class="card-header">
+					<h3 class="mb-0">Login</h3>
+				</div>
+			<div class="card-block">
+				{% if form.errors %}
+				<div class="col-md-12 offset-md-0 alert alert-danger" role="alert">
+					<strong>Oh snap!</strong> Please enter a correct and password. Note that both fields may be case-sensitive.
+				</div>
+				{% endif %}
 
-<input type="submit" value="login"/>
-<input type="hidden" name="next" value="{{ next }}"/>
-</form>
-
-<!-- #Assumes you setup the password_reset view in your URLconf  -->
-<!-- <p><a href="{% url 'password_reset' %}">Lost Password?</a></p> -->
+				<form method="post" action="{% url 'login' %}" class="form" role="form" autocomplete="off" id="formLogin">{% csrf_token %}
+				<div class="form-group">
+					{{form.username.label}}
+					{{ form.username }}
+				</div>
+				<div class="form-group">
+					{{form.password.label}}
+					{{ form.password }}
+				</div>
+				<button type="submit" class="btn btn-success btn-lg float-center" value="{{ next }}">Login</button>
+				</form>
+			</div>
+                    <!--/card-block-->
+			</div>
+                    <!-- /form card login -->
+		</span>
+	</div>
+</div>
 
 {% endblock %}
-

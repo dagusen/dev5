@@ -37,6 +37,17 @@ from django.contrib.auth.views import(
     PasswordResetCompleteView,
     )
 
+from profiles.forms import UserLoginForm
+
+from django.contrib.auth import views as auth_views
+
+from django.contrib.auth.decorators import user_passes_test
+
+anonymous_required =  user_passes_test(
+    lambda user: user.is_anonymous(),
+    settings.LOGIN_REDIRECT_URL,
+    redirect_field_name = 'next')
+
 from items.views import HomeView, ClaimedView
 
 from profiles.views import RegisterView
@@ -52,7 +63,8 @@ urlpatterns = [
 
 
     # login
-    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^login/$', anonymous_required(auth_views.login), {'authentication_form': UserLoginForm}, name = 'login'),
+    # url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^login/$', LoginView.as_view(template_name='registration/login.html'), name='login'),
     url(r'^logout/$', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
 

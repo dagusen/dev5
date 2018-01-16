@@ -4,11 +4,26 @@ from django.contrib.auth import get_user_model
 
 from .models import Profile
 
+from django.contrib.auth.forms import AuthenticationForm
+
+from django.utils.translation import ugettext, ugettext_lazy as _
+
 from django.core.validators import RegexValidator
 
 # from django.core.validators import email_re
 
 User = get_user_model()
+
+class UserLoginForm(AuthenticationForm):
+	error_messages = {
+        'invalid_login': _(
+
+            ''
+
+        ),
+        'inactive': _("This account is inactive."),
+    }
+
 
 class RegisterForm(forms.ModelForm):
 	"""A form for creating new users. Includes all the required fields, plus a repeated password."""
