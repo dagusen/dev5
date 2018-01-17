@@ -3,7 +3,8 @@
 {% block content %}
 
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/nav.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 {% if form.errors %}
 	<div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
@@ -13,49 +14,58 @@
 	</div>
 {% endif %}
 
-<div class="row">
-	<div class="col-md-6 offset-md-3">
-		<span class="anchor" id="formLogin"></span>
-		<!-- form card register -->
-			<div class="card card-outline-secondary">
-				<div class="card-header">
-					<h3 class="mb-0">Sign Up</h3>
-				</div>
-				<div class="card-block">
-					<form method="post" action="{% url 'register' %}" role="form" autocomplete="off">{% csrf_token %}
-						<div class="form-group">
-							<label for="inputName">{{form.username.label}}</label>
-							{{ form.username }}
-						</div>
-						<div class="form-group">
-							<label for="inputEmail3">{{form.email.label}}</label>
-							{{ form.email }}
-						</div>
-						<div class="form-group">
-							<label for="inputName">{{form.first_name.label}}</label>
-							{{form.first_name}}
-						</div>
-						<div class="form-group">
-							<label for="inputName">{{form.last_name.label}}</label>
+<div class="container py-5">
+	<div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <span class="anchor" id="formLogin"></span>
+
+                    <!-- form card login -->
+                    <div class="cards card rounded-1">
+                        <div class="card-header">
+                            <h3 class="mb-0">Sign-up</h3>
+                        </div>
+                        <div class="card-body">
+							<form method="post" action="{% url 'register' %}" class="form" role="form" autocomplete="off" id="formLogin">{% csrf_token %}
+                            <div class="form-group">
+								<label for="inputName">{{form.username.label}}</label>
+								{{ form.username }}
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3">{{form.email.label}}</label>
+								{{ form.email }}
+							</div>
+							<div class="form-group">
+								<label for="inputName">{{form.first_name.label}}</label>
+								{{form.first_name}}
+							</div>
+							<div class="form-group">
+								<label for="inputName">{{form.last_name.label}}</label>
 							{{form.last_name}}
-						</div>
-						<div class="form-group">
-							<label for="inputPassword3">{{form.password1.label}}</label>
-							{{form.password1}}
-						</div>
-						<div class="form-group">
-							<label for="inputVerify3">Verify</label>
-							{{form.password2}}
-						</div>
-						<div class="form-group">
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3">{{form.password1.label}}</label>
+								{{form.password1}}
+							</div>
+							<div class="form-group">
+								<label for="inputVerify3">Verify</label>
+								{{form.password2}}
+							</div>
 							<button type="submit" class="btn btn-success btn-lg float-center" value="{{ next }}">Register</button>
-						</div>
-					</form>
-				</div>
-			</div>
-          <!-- /form card register -->
-		</span>
-	</div>
+                            </form>
+                        </div>
+                        <!--/card-block-->
+                    </div>
+                    <!-- /form card login -->
+                </div>
+            </div>
+            <!--/row-->
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
 </div>
+<!--/container-->
 
 {% endblock %}
